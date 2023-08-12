@@ -1,0 +1,69 @@
+_G.Team = "Pirates" -- Chọn đội nếu chưa chọn
+-- Pirates, Marines
+_G.TimeBeforeNextChest = 0.7	   -- Thời gian nhảy sang cái rương khác
+_G.ChestCollectedBeforeSuicide = 10 -- Số rương nhặt xong trước khi tự sát/hop server
+_G.WhatToDoIfCollectedEnoughChest = "Hop" -- Sau khi nhặt đủ số rương đã cho thì sẽ chọn tự sát hoặc hop server
+-- Suicide/Hop
+local function changeteam(team)
+    game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("SetTeam", team)
+    local makeVisible = {"RaceEnergy","Compass","Energy","AlliesButton","Code","CrewButton","HomeButton","Mute","Settings","MenuButton","Beli","Fragments","Level","Radar","HP"}
+    if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
+        game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam"):Destroy()
+    end
+    for i,v in pairs(makeVisible) do
+        if v == "RaceEnergy" then
+            if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Awakening") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Awakening") then
+                game:GetService("Players").LocalPlayer.PlayerGui.Main[v].Visible = true
+            end
+        else
+            game:GetService("Players").LocalPlayer.PlayerGui.Main[v].Visible = true
+        end
+    end
+    game:GetService("Workspace").CurrentCamera.CameraType = Enum.CameraType.Custom
+    game:GetService("Workspace").CurrentCamera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+    game:GetService("Workspace").CurrentCamera.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+end
+local dem = 0
+local chest = nil
+local plr = game.Players.LocalPlayer
+local curbeli = plr.Data.Beli.Value
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players
+repeat wait() until game.Players.LocalPlayer
+repeat wait() until game.ReplicatedStorage
+repeat wait() until game.ReplicatedStorage:FindFirstChild("Remotes");
+repeat wait() until game.Players.LocalPlayer:FindFirstChild("PlayerGui");
+repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
+changeteam(_G.Team)
+repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name)
+repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name)
+repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name):WaitForChild("Humanoid")
+repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name):WaitForChild("Humanoid").Health > 0
+repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name):WaitForChild("HumanoidRootPart")
+local function frti(uwu)
+    repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name)
+	repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name)
+	repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name):WaitForChild("Humanoid")
+	repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name):WaitForChild("Humanoid").Health > 0
+    repeat wait() until game.Workspace.Characters:WaitForChild(plr.Name):WaitForChild("HumanoidRootPart")
+    if type(firetouchinterest) == "function" then
+        firetouchinterest(plr.Character.Head, uwu, 0)
+        firetouchinterest(plr.Character.PrimaryPart, uwu, 0)
+        firetouchinterest(plr.Character.UpperTorso, uwu, 0)
+        firetouchinterest(plr.Character.LowerTorso, uwu, 0)
+    end
+end
+
+for i,v in pairs(game:GetDescendants()) do
+	if v.Name == "Script" then
+		v:Destroy()
+	end
+end
+
+for i,v in pairs(plr.Character:GetDescendants()) do
+	if v:IsA("BasePart") then
+		v.CanCollide = true
+		v.CanTouch = true
+		v.CanQuery = true
+	end
+end
